@@ -1,5 +1,7 @@
 Hey👋
 I built a pretty terrible Mancala playing bot
+In Javascript
+Because why not
 Its ok though
 Might add more to it, maybe not
 You'll probably beat it, but maybe it'll do well
