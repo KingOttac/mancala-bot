@@ -1,20 +1,24 @@
-function setup() {
-	createCanvas(windowWidth, windowHeight);
-	background(100);
-}
-
 var turn = 0;
 var b = 0;
-var empty1s = 0;
-var empty2s = 0;
 var rcounter = 0;
 var turnside = 0;
 var aiprint = 0;
 var k = 0;
-var pturn = turn;
-let holes = [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+var randomassign = 0;
+let holes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let pholes = [];
+let randomplaces;
 
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+	background(100);
+	for (i = 1; i < 7; i++) {
+		randomassign = round(random(0.5,6.5));
+		holes[7-i] = randomassign;
+		holes[14-i] = randomassign;
+	}
+	randomplaces = [0,-1*windowWidth/60,windowWidth/60,windowWidth/60,-1*windowWidth/60,0,windowWidth/60,windowWidth/60,windowWidth/60,-1*windowWidth/60];
+}
 
 function movepiece(hole) {
 	
@@ -121,33 +125,20 @@ function windetection() {
 	
 	for (d = 1; d < 7; d++) {
 		if (holes[d] != 0) {
-			empty1s = 0;
-			for (d = 8; d < 14; d++) {
-				if (holes[d] != 0) {
-					empty2s = 0;
+			for (f = 8; f < 14; f++) {
+				if (holes[f] != 0) {
 					return 0;
 				}
-				else {
-					empty2s++;
-				}
-			}
+			}//checks other side for filled hole
 		}
-		else {
-			empty1s++;
-		}
-	}
+	}//ends function if not ended
 	
-	if (empty1s >= 6) {
-		for (d = 8; d < 14; d++) {
-			holes[7] += holes[d];
-		}
+	for (d = 8; d < 14; d++) {
+		holes[7] += holes[d];
 	}
-	else if (empty2s >= 6) {
-		for (d = 1; d < 7; d++) {
-			holes[0] += holes[d];
-		}
+	for (d = 1; d < 7; d++) {
+		holes[0] += holes[d];
 	}
-	
 	fill(100);
 	stroke(100);
 	rect(0,0,windowWidth,windowHeight);
@@ -162,12 +153,14 @@ function windetection() {
 	}
 	
 	turn = 0;
-	empty1s = 0;
-	empty2s = 0;
 	rcounter = 0;
 	turnside = 0;
 	k = 0;
-	holes = [0,4,4,4,4,4,4,0,4,4,4,4,4,4];
+	for (i = 1; i < 7; i++) {
+		randomassign = round(random(0.5,5.5));
+		holes[7-i] = randomassign;
+		holes[14-i] = randomassign;
+	}
 		
 }
 
@@ -179,9 +172,7 @@ function draw() {
 		nonai();
 	}//non-ai
 	else {
-		aiprint = ai();
-		print(aiprint);
-		movepiece(aiprint);
+		movepiece(ai());
 	}
 	
 	windetection();
