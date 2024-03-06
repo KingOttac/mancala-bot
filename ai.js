@@ -1,70 +1,64 @@
 function ai() {
 
-	var tomove = 0;
-	var depth = 10;
-	var highest = 0;
-	var lowestopp = 0;
-	var returned = -1;
-	var firstmove = 0;
-	var impmoves = 0;
+	//note that this plays on turn == 1, returns are from 6-1 from left to right of bottom row, goal is holes[0]
+	//returned values are printed
+	//nonai plays on turn == 0, returns are 7-12 from left to right of top row, goal is holes[7]
 	
-	pturn = turn;
-	for (i = 0; i < 14; i++) {
-		pholes[i] = holes[i];
-	}
+	let returnedarr = [holes[7],holes[7],holes[7],holes[7],holes[7],holes[7]];
+	let depth = 6;//depth > 0
 	
-	for (q = 0; q < 5000; q++) {
+	for (a = 0; a < pow(6,depth); a++) {
 		
-		for (y = 0; y < depth && pwindetection() == false; y++) {
+		let movelist = [];
+		for (b = 0; b < depth; b++) {
+			movelist[b] = (a / pow(6,b) - ((a / pow(6,b)) % 1)) % 6;
+		}//the most glorious piece of code i have ever written (base converter)
+		
+		for (b = 0; b < 14; b++) {
+			pholes[b] = holes[b];
+		}
+		let pturn = 1;
+		for (b = 0; b < depth && pwindetect() == false; b++) {
+			
+			let checkingvar;
 			if (pturn == 0) {
-				tomove = round(random(7.5,13.5));
-				while (pholes[tomove] == 0) {
-					tomove = round(random(7.5,13.5));
-				}
-				if (pmovepiece(tomove) == 1) {
-					pturn = 1;
-				}
-				else {
-					pturn = 0;
-				}
+				checkingvar = pmovepiece(13-movelist[b]);
+			}
+			else if (pturn == 1) {
+				checkingvar = pmovepiece(movelist[b]+1);
+			}
+			
+			if (checkingvar == -1) {
+				break;
 			}
 			else {
-				tomove = round(random(0.5,6.5));
-				while (pholes[tomove] == 0) {
-					tomove = round(random(0.5,6.5));
-				}
-				if (y == 0) {
-					firstmove = tomove;
-				}
-				if (pmovepiece(tomove) == 1) {
-					pturn = 1;
-				}
-				else {
-					pturn = 0;
-				}
+				pturn = checkingvar;
 			}
+			
+		}//pov you are a parallel universe
+		
+		if (pwindetect() == true) {
+			for (d = 8; d < 14; d++) {
+				pholes[7] += pholes[d];
+			}
+		}//simulates ending for better result
+		if (pholes[7] > returnedarr[movelist[0]]) {
+			returnedarr[movelist[0]] = pholes[7];
 		}
 		
-		if (pholes[0] > highest && pholes[7] < lowestopp/(q+1)) {
-			highest = pholes[0];
-			returned = firstmove;
-		}
-		lowestopp += pholes[7];
-		for (i = 0; i < 14; i++) {
-			pholes[i] = holes[i];
-		}
-		pturn = 1;
-		
-	}
+	}//pov you are a seximal for loop
 	
-	if (returned == -1) {
-		for (i = 1; i < 7; i++) {
-			if (pholes[i] != 0) {
-				returned = i;
+	let usra = [];
+	for (a = 0; a < 6; a++) {
+		usra[a] = returnedarr[a];
+	}
+	sort(returnedarr);
+	for (a = 0; a < 6; a++) {
+		for (b = 0; b < 6; b++) {
+			if (returnedarr[a] == usra[b] && holes[b+1] != 0) {
+				return b+1;
 			}
 		}
 	}
-	
-	return returned;
 	
 }
