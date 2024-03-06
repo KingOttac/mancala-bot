@@ -166,6 +166,7 @@ function windetection() {
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
+	buildworld();
 		
 }
 
@@ -175,9 +176,11 @@ function draw() {
 	
 	if (turn == 0) {
 		nonai();
+		buildworld();
 	}//non-ai
 	else {
 		movepiece(ai());
+		buildworld();
 	}
 	
 	windetection();
