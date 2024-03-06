@@ -142,16 +142,21 @@ function windetection() {
 	fill(100);
 	stroke(100);
 	rect(0,0,windowWidth,windowHeight);
+	fill(100);
+	text("press r to play again",windowWidth/2,windowHeight/2);
 	if (holes[0] > holes[7]) {
-		print("player2 wins");
+		text("player2 wins",windowWidth/2,windowHeight/2);
 	}
 	else if (holes[7] > holes[0]) {
-		print("player1 wins");
+		text("player1 wins",windowWidth/2,windowHeight/2);
 	}
 	else if (holes[7] == holes[0]) {
-		print("tie");
+		text("tie",windowWidth/2,windowHeight/2);
 	}
-	
+
+	while (key != "r") {
+		//nothing
+	}
 	turn = 0;
 	rcounter = 0;
 	turnside = 0;
