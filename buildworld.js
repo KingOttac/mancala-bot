@@ -16,7 +16,7 @@ function buildworld() {
 		fill(40,27,222);
 		stroke(255);
 		for (p = 0; p < holes[6-q]; p++) {
-			circle(0.254*windowWidth+windowWidth/10*q+randomplaces[p],windowHeight-0.254*windowHeight+randomplaces[p+4],windowWidth/36)
+			circle(0.254*windowWidth+windowWidth/10*q+randomplaces[p],windowHeight-0.254*windowHeight+randomplaces[p+4],windowWidth/50)
 		}
 		fill(0);
 		stroke(0);
@@ -26,22 +26,27 @@ function buildworld() {
 		fill(40,27,222);
 		stroke(255);
 		for (p = 0; p < holes[q+8]; p++) {
-			circle(0.254*windowWidth+windowWidth/10*q+randomplaces[p],0.254*windowHeight+randomplaces[p+4],windowWidth/36)
+			circle(0.254*windowWidth+windowWidth/10*q+randomplaces[p],0.254*windowHeight+randomplaces[p+4],windowWidth/50)
 		}
 		fill(0);
 		stroke(0);
-		textSize(20);
+		textSize(round(windowWidth/60));
 		text(holes[q+8],0.254*windowWidth+(windowWidth/10)*q-windowWidth/24,0.254*windowHeight-windowWidth/21);
 	}
 	
 	fill(40,27,222);
 	stroke(255);
 	for (p = 0; p < holes[7]; p++) {
-		circle(windowWidth*0.15+randomplaces[p],windowHeight/2+randomplaces[p+4],windowWidth/36)
+		circle(windowWidth*0.15+randomplaces[p],windowHeight/2+randomplaces[p+4],windowWidth/50)
 	}
 	for (p = 0; p < holes[0]; p++) {
-		circle(windowWidth-windowWidth*0.15+randomplaces[p],windowHeight-windowHeight/2+randomplaces[p+4],windowWidth/36);
+		circle(windowWidth-windowWidth*0.15+randomplaces[p],windowHeight-windowHeight/2+randomplaces[p+4],windowWidth/50);
 	}
+	
+	fill(0);
+	stroke(0);
+	text(holes[0],windowWidth-(windowWidth*0.15)+windowWidth/28,windowHeight*(5/6))
+	text(holes[7],windowWidth*0.15-windowWidth/28,0.254*windowHeight-windowWidth/21);
 	
 	
 }
