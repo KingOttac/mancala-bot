@@ -163,6 +163,8 @@ function windetection() {
 		holes[7-i] = randomassign;
 		holes[14-i] = randomassign;
 	}
+	holes[7] = 0;
+	holes[0] = 0;
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
