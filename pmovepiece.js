@@ -1,4 +1,8 @@
 function pmovepiece(hole) {
+	
+	if (pholes[hole] == 0) {
+		return -1;
+	}
 		
 	rcounter = 0;
 	
@@ -26,17 +30,14 @@ function pmovepiece(hole) {
 			pholes[7] += 1 + pholes[14-(hole-(g - 14*rcounter)+1)];
 			pholes[14-(hole-(g - 14*rcounter)+1)] = 0;
 			pholes[hole-(g - 14*rcounter)+1] = 0;
-			pturn = 1;
-			return pturn;
-		}
+			return 1;
+		}//capture
 		else if (hole-(g - 14*rcounter)+1 == 7) {
-			pturn = 0;
-			return pturn;
-		}
+			return 0;
+		}//extra turn
 		else {
-			pturn = 1;
-			return pturn;
-		}
+			return 1;
+		}//normal turn
 
 		rcounter = 0;
 
@@ -61,18 +62,16 @@ function pmovepiece(hole) {
 			pholes[0] += 1 + pholes[14-(hole-(g - 14*rcounter)+1)];
 			pholes[14-(hole-(g - 14*rcounter)+1)] = 0;
 			pholes[hole-(g - 14*rcounter)+1] = 0;
-			pturn = 0;
-			return pturn;
-		}
+			return 0;
+		}//capture
 		else if (hole-(g - 14*rcounter)+1 == 0) {
-			pturn = 0;
-			return pturn;
-		}
+			return 1;
+		}//extra turn
 		else {
-			pturn = 0;
-			return pturn
-		}
+			return 0;
+		}//normal turn
 		rcounter = 0;
 		
 	}
+	
 }
