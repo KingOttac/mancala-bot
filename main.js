@@ -7,7 +7,7 @@ var k = 0;
 var randomassign = 0;
 let holes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let pholes = [];
-let randomplaces;
+let randomplaces = [];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -17,7 +17,9 @@ function setup() {
 		holes[7-i] = randomassign;
 		holes[14-i] = randomassign;
 	}
-	randomplaces = [0,-1*windowWidth/60,windowWidth/60,windowWidth/60,-1*windowWidth/60,0,windowWidth/60,windowWidth/60,windowWidth/60,-1*windowWidth/60];
+	for (a = 0; a < 16; a++) {
+		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
+	}
 }
 
 function movepiece(hole) {
@@ -142,18 +144,28 @@ function windetection() {
 	fill(100);
 	stroke(100);
 	rect(0,0,windowWidth,windowHeight);
-	fill(100);
-	text("press r to play again",windowWidth/2,windowHeight/2);
 	if (holes[0] > holes[7]) {
-		text("player2 wins",windowWidth/2,windowHeight/2);
+		print("player2 wins");
 	}
 	else if (holes[7] > holes[0]) {
-		text("player1 wins",windowWidth/2,windowHeight/2);
+		print("player1 wins");
 	}
 	else if (holes[7] == holes[0]) {
-		text("tie",windowWidth/2,windowHeight/2);
+		print("tie");
 	}
-	return 1;
+	
+	turn = 0;
+	rcounter = 0;
+	turnside = 0;
+	k = 0;
+	for (i = 1; i < 7; i++) {
+		randomassign = round(random(0.5,5.5));
+		holes[7-i] = randomassign;
+		holes[14-i] = randomassign;
+	}
+	for (a = 0; a < 16; a++) {
+		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
+	}
 		
 }
 
@@ -168,19 +180,6 @@ function draw() {
 		movepiece(ai());
 	}
 	
-	if (windetection() == 1) {
-		while (key != "r") {
-			//nothing
-		}
-		turn = 0;
-		rcounter = 0;
-		turnside = 0;
-		k = 0;
-		for (i = 1; i < 7; i++) {
-			randomassign = round(random(0.5,6.5));
-			holes[7-i] = randomassign;
-			holes[14-i] = randomassign;
-		}
-	}
+	windetection();
 	
 }
