@@ -153,19 +153,7 @@ function windetection() {
 	else if (holes[7] == holes[0]) {
 		text("tie",windowWidth/2,windowHeight/2);
 	}
-
-	while (key != "r") {
-		//nothing
-	}
-	turn = 0;
-	rcounter = 0;
-	turnside = 0;
-	k = 0;
-	for (i = 1; i < 7; i++) {
-		randomassign = round(random(0.5,5.5));
-		holes[7-i] = randomassign;
-		holes[14-i] = randomassign;
-	}
+	return 1;
 		
 }
 
@@ -180,6 +168,19 @@ function draw() {
 		movepiece(ai());
 	}
 	
-	windetection();
+	if (windetection() == 1) {
+		while (key != "r") {
+			//nothing
+		}
+		turn = 0;
+		rcounter = 0;
+		turnside = 0;
+		k = 0;
+		for (i = 1; i < 7; i++) {
+			randomassign = round(random(0.5,6.5));
+			holes[7-i] = randomassign;
+			holes[14-i] = randomassign;
+		}
+	}
 	
 }
