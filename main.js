@@ -6,6 +6,8 @@ let p1wins = 0;
 let p2wins = 0;
 let ties = 0;
 
+let depth = 5;//depth > 2
+
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(100);
@@ -58,6 +60,9 @@ function movepiece(hole) {
 					return 0;
 				}//free turn
 			}
+			else {
+				g++;
+			}
 		}
 		turn = 1;
 	}
@@ -83,6 +88,9 @@ function movepiece(hole) {
 					turn = 1;
 					return 0;
 				}//free turn
+			}
+			else {
+				g++
 			}
 		}
 		turn = 0;
@@ -139,16 +147,19 @@ function windetection() {
 
 function draw() {
 	
-	buildworld();
+	/*buildworld();
 	
 	if (turn == 0) {
-		nonai()
+		nonai();
 		buildworld();
 	}//player 1
 	else {
 		movepiece(ai(1));
 		buildworld();
-	}//player 2
+	}//player 2*/
+	
+	movepiece(ai(turn));
+	buildworld();
 	
 	windetection();
 	
