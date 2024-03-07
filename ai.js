@@ -5,8 +5,11 @@ function ai(aturn) {
 	//returned values are printed
 	//nonai plays on turn == 0, returns are 7-12 from left to right of top row, goal is holes[7]
 	
-	let returnedarr = [holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7]];
-	let depth = 6;//depth > 2
+	let returnedarr = [];
+	
+	for (a = 0; a < 6; a++) {
+		returnedarr[a] = holes[aturn*7];
+	}
 	
 	for (a = 0; a < pow(6,depth); a++) {
 		
@@ -15,7 +18,7 @@ function ai(aturn) {
 			movelist[b] = (a / pow(6,b) - ((a / pow(6,b)) % 1)) % 6;
 		}//the most glorious piece of code i have ever written (base converter)
 		
-		let usra = returnedarr;
+		let usra = [];
 		for (c = 0; c < 6; c++) {
 			usra[c] = returnedarr[c];
 		}
