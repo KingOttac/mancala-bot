@@ -48,12 +48,10 @@ function buildworld() {
 	stroke(0);
 	text(holes[0],windowWidth-(windowWidth*0.15)+windowWidth/28,windowHeight*(5/6))
 	text(holes[7],windowWidth*0.15-windowWidth/28,0.254*windowHeight-windowWidth/21);
-
+	
 	fill(255);
 	stroke(100);
-	text("p1wins: " + p1wins + "     p2wins: " + p2wins + "     ties: " + ties,windowWidth/80,windowHeight/20);
-	
-	
-	
+	text("p1wins: " + p1wins + "     p2wins: " + p2wins + "     ties: " + ties,windowWidth/120,windowHeight/20);
+
 	
 }
