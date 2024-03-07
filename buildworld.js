@@ -2,6 +2,7 @@ function buildworld() {
 	
 	fill(196,164,132);
 	stroke(0);
+	strokeWeight(windowWidth/900)
 	rect(windowWidth/12,windowHeight/12,windowWidth*(5/6),windowHeight*5/6);
 	ellipse(windowWidth*0.15,windowHeight/2,windowWidth/12,windowHeight*(4/6))
 	ellipse(windowWidth-windowWidth*0.15,windowHeight-windowHeight/2,windowWidth/12,windowHeight*(4/6));
