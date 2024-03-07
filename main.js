@@ -1,11 +1,5 @@
-var turn = 0;
-var b = 0;
-var rcounter = 0;
-var turnside = 0;
-var aiprint = 0;
-var k = 0;
-var randomassign = 0;
-let holes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let turn = 0;
+let holes = [];//goal 1, clockwise p2 holes, goal 2, clockwise p1 holes, set up position here
 let pholes = [];
 let randomplaces = [];
 
@@ -13,10 +7,12 @@ function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(100);
 	for (i = 1; i < 7; i++) {
-		randomassign = round(random(0.5,6.5));
+		let randomassign = round(random(0.5,6.5));
 		holes[7-i] = randomassign;
 		holes[14-i] = randomassign;
 	}
+	holes[0] = 0;
+	holes[7] = 0;
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
@@ -24,11 +20,10 @@ function setup() {
 
 function movepiece(hole) {
 	
+	let turnside;
 	if (hole == 0 || hole == 7) {
 		return 0;
-	}
-	
-	rcounter = 0;
+	}//bug catch
 	
 	if (hole < 7) {
 		turnside = 1;
@@ -36,89 +31,58 @@ function movepiece(hole) {
 	else if (hole > 7) {
 		turnside = 0;
 	}
-	
-	k = holes[hole];
-	
-	if (holes[hole] == 0) {
-		return 0;
-	}
-	if (turnside != turn) {
-		return 0;
-	}
-	else if (turnside == turn && turn == 0) {
+		
+	if (turnside == turn && turn == 0 && holes[hole] != 0) {
+		let cycler = 0;
+		let k = holes[hole];
 		holes[hole] = 0;
-		for (g = 1; g <= k; g++) {
-			if (hole-(g - 14*rcounter) != 0) {
-				holes[hole-(g - 14*rcounter)]++;
+		for (g = k; g > 0; g--) {
+			cycler++;
+			if (cycler > hole) {
+				cycler = hole-13;
 			}
-			else {
-				rcounter++;
+			if (hole-cycler != 0) {
+				holes[hole-cycler]++;
+				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler > 7 && holes[14-(hole-cycler)] != 0) {
+					holes[7] += 1 + holes[14-(hole-cycler)];
+					holes[14-(hole-cycler)] = 0;
+					holes[hole-cycler] = 0;
+					turn = 1;
+					return 0;
+				}//captures
+				else if (g == 1 && hole-cycler == 7) {
+					turn = 0;
+					return 0;
+				}//free turn
 			}
 		}
-		
-		if (holes[hole-(g - 14*rcounter)+1] == 1 && hole-(g - 14*rcounter)+1 > 7 && holes[14-(hole-(g - 14*rcounter))] != 0 && rcounter > 0) {
-			holes[7] += 1 + holes[14-(hole-(g - 14*rcounter))];
-			holes[14-(hole-(g - 14*rcounter))] = 0;
-			holes[hole-(g - 13*rcounter)] = 0;
-			turn = 1;
-			return 0;
-		}
-		else if (holes[hole-(g - 14*rcounter)+1] == 1 && hole-(g - 14*rcounter)+1 > 7 && holes[14-(hole-(g - 14*rcounter)+1)] != 0 && rcounter == 0) {
-			holes[7] += 1 + holes[14-(hole-(g - 14*rcounter)+1)];
-			holes[14-(hole-(g - 14*rcounter)+1)] = 0;
-			holes[hole-(g - 14*rcounter)+1] = 0;
-			turn = 1;
-			return 0;
-		}
-		else if (hole-(g - 14*rcounter)+1 == 7) {
-			return 0;
-		}
-		else {
-			turn = 1;
-		}
-
-		rcounter = 0;
-
+		turn = 1;
 	}
 	
-	else if (turnside == turn && turn == 1) {
+	else if (turnside == turn && turn == 1 && holes[hole] != 0) {
+		let cycler = 0;
+		let k = holes[hole];
 		holes[hole] = 0;
-		rcounter = 0;
-		for (g = 1; g <= k; g++) {
-			if (hole-(g - 14*rcounter) != 0 && hole-(g - 14*rcounter) != 7) {
-				holes[hole-(g - 14*rcounter)]++;
+		for (g = k; g > 0; g--) {
+			cycler++;
+			if (cycler > hole) {
+				cycler = hole-13;
 			}
-			else if (hole-(g - 14*rcounter) == 0) {
-				holes[hole-(g - 14*rcounter)]++;
-				if (hole == k) {}
-				else {
-					rcounter++;
-				}
+			if (hole-cycler != 7) {
+				holes[hole-cycler]++;
+				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler < 7 && holes[14-(hole-cycler)] != 0) {
+					holes[0] += 1 + holes[14-(hole-cycler)];
+					holes[14-(hole-cycler)] = 0;
+					turn = 0;
+					return 0;
+				}//captures
+				else if (g == 1 && hole-cycler == 0) {
+					turn = 1;
+					return 0;
+				}//free turn
 			}
 		}
-		
-		if (holes[hole-(g - 14*rcounter)+1] == 1 && hole-(g - 14*rcounter)+1 < 7 && holes[14-(hole-(g - 14*rcounter))] != 0 && hole-(g - 14*rcounter)+1 != 0 && rcounter > 0) {
-			holes[0] += 1 + holes[14-(hole-(g - 14*rcounter))];
-			holes[14-(hole-(g - 14*rcounter))] = 0;
-			holes[hole-(g - 13*rcounter)] = 0;
-			turn = 0;
-			return 0;
-		}
-		else if (holes[hole-(g - 14*rcounter)+1] == 1 && hole-(g - 14*rcounter)+1 < 7 && holes[14-(hole-(g - 14*rcounter)+1)] != 0 && hole-(g - 14*rcounter)+1 != 0 && rcounter == 0) {
-			holes[0] += 1 + holes[14-(hole-(g - 14*rcounter)+1)];
-			holes[14-(hole-(g - 14*rcounter)+1)] = 0;
-			holes[hole-(g - 14*rcounter)+1] = 0;
-			turn = 0;
-			return 0;
-		}
-		else if (hole-(g - 14*rcounter)+1 == 0) {
-			return 0;
-		}
-		else {
-			turn = 0;
-		}
-		rcounter = 0;
-		
+		turn = 0;
 	}
 	
 } 
@@ -159,12 +123,12 @@ function windetection() {
 	turnside = 0;
 	k = 0;
 	for (i = 1; i < 7; i++) {
-		randomassign = round(random(0.5,5.5));
+		let randomassign = round(random(0.5,5.5));
 		holes[7-i] = randomassign;
 		holes[14-i] = randomassign;
 	}
-	holes[7] = 0;
 	holes[0] = 0;
+	holes[7] = 0;
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
@@ -177,13 +141,13 @@ function draw() {
 	buildworld();
 	
 	if (turn == 0) {
-		nonai();
+		nonai()
 		buildworld();
-	}//non-ai
+	}//player 1
 	else {
-		movepiece(ai());
+		movepiece(ai(1));
 		buildworld();
-	}
+	}//player 2
 	
 	windetection();
 	
