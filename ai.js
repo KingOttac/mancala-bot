@@ -6,7 +6,7 @@ function ai(aturn) {
 	//nonai plays on turn == 0, returns are 7-12 from left to right of top row, goal is holes[7]
 	
 	let returnedarr = [holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7],holes[aturn*7]];
-	let depth = 6;//depth > 0
+	let depth = 6;//depth > 2
 	
 	for (a = 0; a < pow(6,depth); a++) {
 		
@@ -15,12 +15,24 @@ function ai(aturn) {
 			movelist[b] = (a / pow(6,b) - ((a / pow(6,b)) % 1)) % 6;
 		}//the most glorious piece of code i have ever written (base converter)
 		
+		let usra = returnedarr;
+		for (c = 0; c < 6; c++) {
+			usra[c] = returnedarr[c];
+		}
+		sort(usra);
+		if (returnedarr[movelist[0]] > usra[0]) {
+			continue;
+		}
+		
 		for (b = 0; b < 14; b++) {
 			pholes[b] = holes[b];
 		}
 		let pturn = aturn;
 		for (b = 0; b < depth && pwindetect() == false; b++) {
 			
+			if (pholes[aturn*7] > returnedarr[movelist[0]] && pholes[aturn*7] != holes[aturn*7]) {
+				break;
+			}//maybe alpha beta pruned??
 			let checkingvar;
 			if (pturn == 0) {
 				checkingvar = pmovepiece(movelist[b]+8);
