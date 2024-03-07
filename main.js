@@ -147,7 +147,7 @@ function windetection() {
 
 function draw() {
 	
-	/*buildworld();
+	buildworld();
 	
 	if (turn == 0) {
 		nonai();
@@ -156,11 +156,8 @@ function draw() {
 	else {
 		movepiece(ai(1));
 		buildworld();
-	}//player 2*/
-	
-	movepiece(ai(turn));
-	buildworld();
-	
+	}//player 2
+		
 	windetection();
 	
 }
