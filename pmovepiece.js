@@ -48,9 +48,10 @@ function pmovepiece(hole) {
 			}
 			if (hole-cycler != 7) {
 				pholes[hole-cycler]++;
-				if (g == 1 && pholes[hole-cycler] == 1 && hole-cycler < 7 && pholes[14-(hole-cycler)] != 0) {
+				if (g == 1 && pholes[hole-cycler] == 1 && hole-cycler != 0 && hole-cycler < 7 && pholes[14-(hole-cycler)] != 0) {
 					pholes[0] += 1 + pholes[14-(hole-cycler)];
 					pholes[14-(hole-cycler)] = 0;
+					pholes[hole-cycler] = 0;
 					return 0;
 				}//captures
 				else if (g == 1 && hole-cycler == 0) {
