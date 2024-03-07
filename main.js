@@ -6,7 +6,7 @@ let p1wins = 0;
 let p2wins = 0;
 let ties = 0;
 
-let depth = 5;//depth > 2
+let depth = 6;//depth > 2
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
