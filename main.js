@@ -34,7 +34,7 @@ function movepiece(hole) {
 	else if (hole > 7) {
 		turnside = 0;
 	}
-		
+	
 	if (turnside == turn && turn == 0 && holes[hole] != 0) {
 		let cycler = 0;
 		let k = holes[hole];
@@ -73,7 +73,7 @@ function movepiece(hole) {
 			}
 			if (hole-cycler != 7) {
 				holes[hole-cycler]++;
-				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler < 7 && holes[14-(hole-cycler)] != 0) {
+				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler != 0 && hole-cycler < 7 && holes[14-(hole-cycler)] != 0) {
 					holes[0] += 1 + holes[14-(hole-cycler)];
 					holes[14-(hole-cycler)] = 0;
 					turn = 0;
@@ -122,9 +122,6 @@ function windetection() {
 	}
 	
 	turn = 0;
-	rcounter = 0;
-	turnside = 0;
-	k = 0;
 	for (i = 1; i < 7; i++) {
 		let randomassign = round(random(0.5,5.5));
 		holes[7-i] = randomassign;
@@ -132,6 +129,7 @@ function windetection() {
 	}
 	holes[0] = 0;
 	holes[7] = 0;
+	pholes = [];
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
