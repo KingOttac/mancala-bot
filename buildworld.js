@@ -50,7 +50,7 @@ function buildworld() {
 
 	fill(255);
 	stroke(255);
-	text("p1wins: " + p1wins + "     p2wins: " + p2wins + "     ties: " + ties,windowWidth/120,windowHeight/50);
+	text("p1wins: " + p1wins + "     p2wins: " + p2wins + "     ties: " + ties,windowWidth/80,windowHeight/20);
 	
 	
 	
