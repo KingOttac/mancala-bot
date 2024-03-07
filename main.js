@@ -2,6 +2,9 @@ let turn = 0;
 let holes = [];//goal 1, clockwise p2 holes, goal 2, clockwise p1 holes, set up position here
 let pholes = [];
 let randomplaces = [];
+let p1wins = 0;
+let p2wins = 0;
+let ties = 0;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -109,13 +112,13 @@ function windetection() {
 	stroke(100);
 	rect(0,0,windowWidth,windowHeight);
 	if (holes[0] > holes[7]) {
-		print("player2 wins");
+		p2wins++;
 	}
 	else if (holes[7] > holes[0]) {
-		print("player1 wins");
+		p1wins++;
 	}
 	else if (holes[7] == holes[0]) {
-		print("tie");
+		ties++;
 	}
 	
 	turn = 0;
