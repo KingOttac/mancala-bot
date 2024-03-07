@@ -1,6 +1,6 @@
 Hey👋
 
-I built a pretty terrible Mancala playing bot
+I built a Mancala playing robot
 
 In Javascript
 
@@ -8,12 +8,6 @@ Because why not
 
 Its ok though
 
-Might add more to it, maybe not
-
 You'll probably beat it, but maybe it'll do well
-
-Main is still buggy
-
-Depth and tree search still need some work
 
 Enjoy I guess
