@@ -18,6 +18,7 @@ function ai(aturn) {
 			movelist[b] = (a / pow(6,b) - ((a / pow(6,b)) % 1)) % 6;
 		}//the most glorious piece of code i have ever written (base converter)
 		
+		//only checks lowest final values to see if they will be raised in a different case (AB pruning)
 		let usra = [];
 		for (c = 0; c < 6; c++) {
 			usra[c] = returnedarr[c];
@@ -26,6 +27,7 @@ function ai(aturn) {
 		if (returnedarr[movelist[0]] > usra[0]) {
 			continue;
 		}
+		/**/
 		
 		for (b = 0; b < 14; b++) {
 			pholes[b] = holes[b];
@@ -67,7 +69,7 @@ function ai(aturn) {
 		
 	}//pov you are a seximal for loop
 	
-	let usra = [];
+	let usra = [];//unsorted returned array
 	for (a = 0; a < 6; a++) {
 		usra[a] = returnedarr[a];
 	}
