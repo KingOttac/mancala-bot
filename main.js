@@ -1,4 +1,4 @@
-let turn = 0;
+let turn;
 let holes = [];//goal 1, clockwise p2 holes, goal 2, clockwise p1 holes, set up position here
 let pholes = [];
 let randomplaces = [];
@@ -6,11 +6,13 @@ let p1wins = 0;
 let p2wins = 0;
 let ties = 0;
 
-let depth = 6;//depth > 2
+let depth = 4;
 
-function setup() {
-	createCanvas(windowWidth, windowHeight);
-	background(100);
+//8 5 1 9 2 8 10 1 3 8 9 1 2 11 1 4 8 9 5 10 1 2 1 3 9 1 2 8 12 1 4 9 2 8 1 3 10 2 11 1 6 - progression for basic 4s mancala
+
+function reset() {
+	
+	turn = 0;
 	for (i = 1; i < 7; i++) {
 		let randomassign = round(random(0.5,6.5));
 		holes[7-i] = randomassign;
@@ -21,6 +23,14 @@ function setup() {
 	for (a = 0; a < 16; a++) {
 		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
 	}
+	
+}
+
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+	background(100);
+	reset();
+	frameRate(20000)
 }
 
 function movepiece(hole) {
@@ -78,9 +88,10 @@ function movepiece(hole) {
 			}
 			if (hole-cycler != 7) {
 				holes[hole-cycler]++;
-				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler != 0 && hole-cycler < 7 && holes[14-(hole-cycler)] != 0) {
+				if (g == 1 && holes[hole-cycler] == 1 && hole-cycler > 0 && hole-cycler < 7 && holes[14-(hole-cycler)] != 0) {
 					holes[0] += 1 + holes[14-(hole-cycler)];
 					holes[14-(hole-cycler)] = 0;
+					holes[hole-cycler] = 0;
 					turn = 0;
 					return 0;
 				}//captures
@@ -129,35 +140,22 @@ function windetection() {
 		ties++;
 	}
 	
-	turn = 0;
-	for (i = 1; i < 7; i++) {
-		let randomassign = round(random(0.5,5.5));
-		holes[7-i] = randomassign;
-		holes[14-i] = randomassign;
-	}
-	holes[0] = 0;
-	holes[7] = 0;
-	pholes = [];
-	for (a = 0; a < 16; a++) {
-		randomplaces[a] = random(-1*windowWidth/120,windowWidth/120) + round(random(-1.5,1.5))*windowWidth/80;
-	}
+	reset();
 	buildworld();
 		
 }
 
 function draw() {
 	
-	buildworld();
-	
 	if (turn == 0) {
-		nonai();
+		movepiece(nonai(0));
 		buildworld();
-	}//player 1
+	}
 	else {
 		movepiece(ai(1));
 		buildworld();
-	}//player 2
-		
+	}
+	
 	windetection();
 	
 }
